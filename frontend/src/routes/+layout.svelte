@@ -2,7 +2,7 @@
   import "../app.css";
 </script>
 
-<div class="navbar bg-base-200 mb-10">
+<div class="navbar bg-success-content mb-10">
   <div class="navbar-start">
     <div class="dropdown">
       <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
@@ -21,7 +21,7 @@
         >
       </div>
       <ul
-        class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 rounded-box w-52"
+        class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-success-content rounded-box w-52"
       >
         <li><a href="/dashboard">Dashboard</a></li>
         <li><button>Login/logout</button></li>
@@ -29,7 +29,7 @@
     </div>
   </div>
   <div class="navbar-center">
-    <a href="/" class="btn btn-ghost text-xl">daisyUI</a>
+    <a href="/" class="btn btn-ghost text-xl">Comandă atestate</a>
   </div>
   <div class="navbar-end">
     <button class="btn btn-ghost btn-circle">

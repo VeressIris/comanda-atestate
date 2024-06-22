@@ -4,10 +4,11 @@ import daisyui from "daisyui";
 
 export default {
   content: ["./src/**/*.{html,js,svelte,ts}"],
-
   theme: {
     extend: {},
   },
-
   plugins: [typography, daisyui],
+  daisyui: {
+    themes: ["light", "fantasy", "bumblebee", "cmyk"],
+  },
 } as Config;
