@@ -16,6 +16,26 @@ app.listen(port, () => {
   console.log(`Comanda Atestate listening on port ${port}`);
 });
 
+// read orders from database
+app.get("/getOrders", async (req: Request, res: Response) => {
+  try {
+    await client.connect();
+    const ordersCollection = client.db("orders").collection("orders");
+    const orders = await ordersCollection.find().toArray();
+    console.log(orders);
+    res.status(200).send(orders);
+  } catch (error) {
+    console.error("Error fetching orders: ", error);
+    res.status(500).send({ message: "Failed to fetch orders" });
+  } finally {
+    await client.close();
+  }
+});
+
+// write order to database
+
+// change order status (completed to uncompleted or vice-versa)
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
