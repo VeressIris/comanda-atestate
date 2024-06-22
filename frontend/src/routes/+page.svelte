@@ -55,7 +55,7 @@
         <div class="flex flex-row items-center w-fit">
           <label
             for="knowsComplexity"
-            class="form-control w-full max-w-xs my-1 mr-3">Nu știu</label
+            class="form-control w-full max-w-xs my-1 mr-3 pl-1">Nu știu</label
           >
           <input
             bind:checked={knowsComplexity}
