@@ -52,6 +52,6 @@
     </button>
   </div>
 </div>
-<div class="mx-60">
+<div class="mx-32">
   <slot></slot>
 </div>

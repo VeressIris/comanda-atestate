@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   let hasProjectIdea = false;
   let wantsTehnologies = false;
   let knowsComplexity = false;
