@@ -7,7 +7,7 @@
 <h1>Comandă</h1>
 <div class="flex justify-center">
   <div
-    class="flex flex-col items-center mt-4 bg-success-content rounded-xl px-32 py-3 w-fit"
+    class="flex flex-col items-center my-4 bg-success-content rounded-xl px-32 py-3 w-fit"
   >
     <label for="name" class="form-control w-fit max-w-xs mb-1">
       <span class="label font-medium">Cum te cheamă?</span>
@@ -113,3 +113,32 @@
     >
   </div>
 </div>
+<button
+  class="btn p-2 min-h-0 h-fit btn-ghost fixed bottom-10 right-20"
+  on:click={() => faq.showModal()}
+  ><svg
+    xmlns="http://www.w3.org/2000/svg"
+    height="32px"
+    viewBox="0 -960 960 960"
+    width="32px"
+    fill="#000000"
+    ><path
+      d="M478-240q21 0 35.5-14.5T528-290q0-21-14.5-35.5T478-340q-21 0-35.5 14.5T428-290q0 21 14.5 35.5T478-240Zm-36-154h74q0-33 7.5-52t42.5-52q26-26 41-49.5t15-56.5q0-56-41-86t-97-30q-57 0-92.5 30T342-618l66 26q5-18 22.5-39t53.5-21q32 0 48 17.5t16 38.5q0 20-12 37.5T506-526q-44 39-54 59t-10 73Zm38 314q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
+    /></svg
+  ></button
+>
+<div class="w-full flex justify-end mt-2"></div>
+<dialog id="faq" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Cum facem cu plata?</h3>
+    <p class="pt-4 pb-1">
+      Prețul va fi stabilit în funcție de complexitatea proiectului.
+    </p>
+    <p>Metoda de plată va fi discutată în privat.</p>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn">Închide</button>
+      </form>
+    </div>
+  </div>
+</dialog>
