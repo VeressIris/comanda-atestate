@@ -7,10 +7,10 @@
 <h1>Comandă</h1>
 <div class="flex justify-center">
   <div
-    class="flex flex-col items-center mt-10 bg-success-content rounded-xl px-32 py-3 w-fit"
+    class="flex flex-col items-center mt-4 bg-success-content rounded-xl px-32 py-3 w-fit"
   >
-    <label for="name" class="form-control w-fit max-w-xs mb-3">
-      <span class="label">Cum te cheamă?</span>
+    <label for="name" class="form-control w-fit max-w-xs mb-1">
+      <span class="label font-medium">Cum te cheamă?</span>
       <input
         type="text"
         placeholder="Popescu Ion"
@@ -18,8 +18,8 @@
         class="input input-bordered input-info w-fit max-w-xs"
       />
     </label>
-    <label for="phone" class="form-control w-fit max-w-xs my-3">
-      <span class="label">Număr de telefon:</span>
+    <label for="phone" class="form-control w-fit max-w-xs my-1">
+      <span class="label font-medium">Număr de telefon:</span>
       <input
         type="tel"
         placeholder="072 123 4567"
@@ -29,9 +29,9 @@
     </label>
     <label
       for="hasProjectIdea"
-      class="cursor-pointer label justify-normal my-3"
+      class="cursor-pointer label justify-normal mt-1"
     >
-      <span class="label mr-3">Am o idee de proiect: </span>
+      <span class="label mr-3 font-medium">Am o idee de proiect: </span>
       <input
         bind:checked={hasProjectIdea}
         name="hasProjectIdea"
@@ -41,19 +41,21 @@
     </label>
     {#if hasProjectIdea}
       <div>
-        <span class="label">Detaliază ideea de proiect:</span>
+        <span class="label font-medium py-0 mb-1"
+          >Detaliază ideea de proiect:</span
+        >
         <textarea
           id="ideaDetails"
-          class="textarea textarea-info w-80 h-40"
+          class="textarea textarea-info w-80 h-40 mb-1"
           placeholder="Idee..."
         ></textarea>
       </div>
-      <label for="projectComplexity" class="form-control w-full max-w-xs my-3">
-        <span class="label">Nivel complexitate:</span>
+      <label for="projectComplexity" class="form-control w-full max-w-xs my-1">
+        <span class="label font-medium py-0 mb-1">Nivel complexitate:</span>
         <div class="flex flex-row items-center w-fit">
           <label
             for="knowsComplexity"
-            class="form-control w-full max-w-xs my-3 mr-3">Nu știu</label
+            class="form-control w-full max-w-xs my-1 mr-3">Nu știu</label
           >
           <input
             bind:checked={knowsComplexity}
@@ -70,7 +72,7 @@
             max="5"
             value="1"
             step="1"
-            class="range range-info h-4"
+            class="range range-info"
           />
           <div class="w-full flex justify-between text-xs px-2">
             <span>1</span>
@@ -82,11 +84,8 @@
         {/if}
       </label>
     {/if}
-    <label
-      for="wantsTehnologies"
-      class="cursor-pointer label justify-normal my-3"
-    >
-      <span class="label mr-3"
+    <label for="wantsTehnologies" class="cursor-pointer label justify-normal">
+      <span class="label mr-3 font-medium"
         >Vreau să folosești anumite tehnologii (React, MongoDB, etc.):
       </span>
       <input
@@ -98,16 +97,19 @@
     </label>
     {#if wantsTehnologies}
       <div>
-        <span class="label">Vreau sa folosești următoarele tehnologii:</span>
+        <span class="label py-0 mb-1"
+          >Vreau sa folosești următoarele tehnologii:</span
+        >
         <textarea
           id="wantedTechnologies"
           placeholder="React, MongoDB, etc."
-          class="textarea textarea-info w-80 h-40"
+          class="textarea textarea-info w-80 h-40 mb-4"
         ></textarea>
       </div>
     {/if}
-    <button class="btn btn-outline btn-secondary" id="sendResponseBttn"
-      >Submit</button
+    <button
+      class="btn btn-outline btn-secondary min-h-5 h-10 px-5 text-base"
+      id="sendResponseBttn">Submit</button
     >
   </div>
 </div>
