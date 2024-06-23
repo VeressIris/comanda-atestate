@@ -1,6 +1,6 @@
-import express, { Request, Response } from "express";
-import dotenv from "dotenv";
+import express from "express";
 import { MongoClient, ServerApiVersion } from "mongodb";
+import dotenv from "dotenv";
 import cors from "cors";
 
 dotenv.config();
@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (req, res) => {
   res.send("Hello atestate API!");
 });
 
@@ -20,7 +20,7 @@ app.listen(port, () => {
 });
 
 // read orders from database
-app.get("/getOrders", async (req: Request, res: Response) => {
+app.get("/getOrders", async (req, res) => {
   try {
     await client.connect();
     const ordersCollection = client.db("orders").collection("orders");
@@ -36,7 +36,7 @@ app.get("/getOrders", async (req: Request, res: Response) => {
 });
 
 // write order to database
-app.post("/addOrder", async (req: Request, res: Response) => {
+app.post("/addOrder", async (req, res) => {
   try {
     await client.connect();
     const ordersCollection = client.db("orders").collection("orders");
@@ -58,7 +58,7 @@ app.post("/addOrder", async (req: Request, res: Response) => {
 });
 
 // change order status (completed to uncompleted or vice-versa)
-app.patch("/updateOrderStatus", async (req: Request, res: Response) => {
+app.patch("/updateOrderStatus", async (req, res) => {
   try {
     await client.connect();
     const ordersCollection = client.db("orders").collection("orders");
@@ -96,7 +96,7 @@ app.patch("/updateOrderStatus", async (req: Request, res: Response) => {
 });
 
 // get current status of order
-app.get("/getOrderStatus", async (req: Request, res: Response) => {
+app.get("/getOrderStatus", async (req, res) => {
   try {
     await client.connect();
     const ordersCollection = client.db("orders").collection("orders");
