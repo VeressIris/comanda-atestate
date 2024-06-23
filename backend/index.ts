@@ -1,7 +1,6 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import { MongoClient, ServerApiVersion } from "mongodb";
-import { time } from "console";
 
 dotenv.config();
 const uri = `mongodb+srv://${process.env.ADMIN}:${process.env.PASSWORD}@cluster0.5hmuaho.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -11,7 +10,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello atestate!");
+  res.send("Hello atestate API!");
 });
 
 app.listen(port, () => {
@@ -55,8 +54,46 @@ app.post("/addOrder", async (req: Request, res: Response) => {
     await client.close();
   }
 });
-// change order status (completed to uncompleted or vice-versa)
 
+// change order status (completed to uncompleted or vice-versa)
+app.patch("/updateOrderStatus", async (req: Request, res: Response) => {
+  try {
+    await client.connect();
+    const ordersCollection = client.db("orders").collection("orders");
+    const order = await ordersCollection.findOne({ name: req.body.name });
+    if (!order) {
+      return res.status(404).send({ message: "Order not found" });
+    }
+
+    const currentStatus = order.completed;
+    const updateDocument = {
+      $set: {
+        completed: !currentStatus,
+      },
+    };
+
+    const result = await ordersCollection.updateOne(
+      { name: req.body.name },
+      updateDocument
+    );
+
+    if (result.modifiedCount > 0) {
+      console.log(`Successfully updated status of ${req.body.name}'s order`);
+      res.status(200).send({
+        message: `Successfully updated status of ${req.body.name}'s order`,
+      });
+    } else {
+      res.status(500).send({ message: "Failed to update order status" });
+    }
+  } catch (error) {
+    console.error("Error updating order status: ", error);
+    res.status(500).send({ message: "Failed to update order status" });
+  } finally {
+    await client.close();
+  }
+});
+
+// connect to MongoDB
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
