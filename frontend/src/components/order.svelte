@@ -1,8 +1,8 @@
 <script lang="ts">
   export let name: string;
-  export let technologies: string[];
-  export let complexity: number;
-  let completed = false;
+  export let technologies: string;
+  export let complexity: string;
+  export let completed: boolean;
 </script>
 
 <div
@@ -12,7 +12,14 @@
 >
   <h1 class="mb-4">{name}</h1>
   <p><span class="font-medium">Tehnologii:</span> {technologies}</p>
-  <p><span class="font-medium">Complexitate:</span> {complexity}/5</p>
+  <p>
+    <span class="font-medium">Complexitate:</span>
+    {#if complexity === "necunoscut"}
+      {complexity}
+    {:else}
+      {complexity}/5
+    {/if}
+  </p>
   <div class="flex flex-row-reverse items-center justify-between">
     <div class="form-control">
       <label class="label cursor-pointer justify-end p-0">
