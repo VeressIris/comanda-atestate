@@ -18,6 +18,6 @@
       />
     {/each}
   {:catch error}
-    <p>Error loading news</p>
+    <p>Error loading orders</p>
   {/await}
 </div>

@@ -117,6 +117,22 @@ app.get("/getOrderStatus", async (req, res) => {
   }
 });
 
+// get someone's order
+app.get("/getOrder", async (req, res) => {
+  try {
+    await client.connect();
+    const ordersCollection = client.db("orders").collection("orders");
+    const order = await ordersCollection.findOne({ name: req.body.name });
+    console.log(order);
+    res.status(200).send(order);
+  } catch (error) {
+    console.error("Error fetching order: ", error);
+    res.status(500).send({ message: "Failed to fetch order" });
+  } finally {
+    await client.close();
+  }
+});
+
 // connect to MongoDB
 const client = new MongoClient(uri, {
   serverApi: {
