@@ -2,9 +2,7 @@
 
 export async function load({ params, fetch }) {
   const response = await fetch(
-    `https://comanda-atestate-api.vercel.app/getOrder?name=${encodeURIComponent(
-      params.name
-    )}`,
+    `/api/getOrder?name=${encodeURIComponent(params.name)}`,
     {
       method: "GET",
       headers: {

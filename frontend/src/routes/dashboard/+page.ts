@@ -1,9 +1,7 @@
 /** @type {import('./$types').PageLoad} */
 
 export async function load({ fetch }) {
-  const response = await fetch(
-    "https://comanda-atestate-api.vercel.app/getOrders"
-  );
+  const response = await fetch("/api/getOrders");
 
   const orders = await response.json();
   return { orders };
