@@ -9,6 +9,9 @@
   let complexity = 1;
   let wantedTechnologies: string;
 
+  let success = false;
+  let error = false;
+
   function addOrderToDB() {
     //check for required fields
     if (!name) alert("Introduceți numele");
@@ -35,15 +38,20 @@
       },
       body: JSON.stringify(order),
     })
-      //!!CHANGE THESE ALERTS TO SOMETHING ELSE
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        alert("Comanda a fost trimisă cu succes!");
+        success = true;
+        setTimeout(() => {
+          success = false;
+        }, 3500);
       })
       .catch((err) => {
         console.error(err);
-        alert("Eroare la trimiterea comenzii");
+        error = true;
+        setTimeout(() => {
+          error = false;
+        }, 3500);
       });
   }
 </script>
@@ -193,3 +201,43 @@
     </div>
   </div>
 </dialog>
+{#if error}
+  <div class="flex justify-center">
+    <div role="alert" class="alert alert-error w-1/4">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 shrink-0 stroke-current"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <span>Eroare! Nu am putut procesa comanda ta.</span>
+    </div>
+  </div>
+{/if}
+{#if success}
+  <div class="flex justify-center">
+    <div role="alert" class="alert alert-info w-1/4">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 shrink-0 stroke-current"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <span>Comanda ta a fost trimisă cu succes!</span>
+    </div>
+  </div>
+{/if}
