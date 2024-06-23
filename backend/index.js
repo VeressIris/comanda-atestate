@@ -122,7 +122,7 @@ app.get("/getOrder", async (req, res) => {
   try {
     await client.connect();
     const ordersCollection = client.db("orders").collection("orders");
-    const order = await ordersCollection.findOne({ name: req.body.name });
+    const order = await ordersCollection.findOne({ name: req.query.name });
     console.log(order);
     res.status(200).send(order);
   } catch (error) {
