@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import { MongoClient, ServerApiVersion } from "mongodb";
+import cors from "cors";
 
 dotenv.config();
 const uri = `mongodb+srv://${process.env.ADMIN}:${process.env.PASSWORD}@cluster0.5hmuaho.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -8,6 +9,7 @@ const uri = `mongodb+srv://${process.env.ADMIN}:${process.env.PASSWORD}@cluster0
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello atestate API!");
@@ -88,6 +90,28 @@ app.patch("/updateOrderStatus", async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error updating order status: ", error);
     res.status(500).send({ message: "Failed to update order status" });
+  } finally {
+    await client.close();
+  }
+});
+
+// get current status of order
+app.get("/getOrderStatus", async (req: Request, res: Response) => {
+  try {
+    await client.connect();
+    const ordersCollection = client.db("orders").collection("orders");
+    const order = await ordersCollection.findOne({ name: req.body.name });
+    if (!order) {
+      return res.status(404).send({ message: "Order not found" });
+    }
+
+    const currentStatus = order.completed;
+
+    console.log(`${req.body.name}'s order: ${currentStatus}`);
+    res.status(200).send(currentStatus);
+  } catch (error) {
+    console.error("Error getting order status: ", error);
+    res.status(500).send({ message: "Failed to fetch order status" });
   } finally {
     await client.close();
   }
