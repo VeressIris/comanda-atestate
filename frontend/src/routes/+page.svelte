@@ -1,7 +1,7 @@
 <script lang="ts">
   let hasProjectIdea = false;
   let wantsTehnologies = false;
-  let knowsComplexity = false;
+  let doesntKnowComplexity = true;
 
   let name: string;
   let phoneNumber: string;
@@ -19,7 +19,7 @@
 
     // give values to optional fields for db
     let parsedComplexity = complexity.toString();
-    if (knowsComplexity) parsedComplexity = "necunoscut";
+    if (doesntKnowComplexity) parsedComplexity = "necunoscut";
     if (!hasProjectIdea) ideaDetails = "none";
     if (!wantsTehnologies) wantedTechnologies = "nespecificat";
 
@@ -115,13 +115,13 @@
             class="form-control w-full max-w-xs my-1 mr-3 pl-1">Nu știu</label
           >
           <input
-            bind:checked={knowsComplexity}
+            bind:checked={doesntKnowComplexity}
             name="knowsComplexity"
             type="checkbox"
             class="checkbox checkbox-info"
           />
         </div>
-        {#if !knowsComplexity}
+        {#if !doesntKnowComplexity}
           <input
             bind:value={complexity}
             type="range"
