@@ -6,5 +6,5 @@ export async function load({ fetch }) {
   );
 
   const orders = await response.json();
-  return { props: await orders };
+  return { orders };
 }

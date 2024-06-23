@@ -3,19 +3,31 @@
 
   export let data: PageData;
 
-  let completed = false;
+  let completed = data.order.completed;
 </script>
 
-<h1 class="mb-4">Proiect pentru <i>{data.title}</i></h1>
-<h3 class="mb-2">Număr de contact: 072 123 456</h3>
-<h3 class="mb-2">Tehnologii sugerate:</h3>
-<h3 class="mb-2">Complexitate proiect: X/5</h3>
-<h3 class="mb-2">Idee proiect:</h3>
-<p class="text-lg">
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti temporibus
-  iure at expedita optio commodi eligendi mollitia dolor in, itaque atque
-  necessitatibus molestias aliquam omnis incidunt delectus illum sunt minima!
-</p>
+<h1 class="mb-4">Proiect pentru <i>{data.order.name}</i></h1>
+<h3 class="mb-2">Număr de contact: {data.order.phoneNumber}</h3>
+<h3 class="mb-2">Tehnologii sugerate: {data.order.technologies}</h3>
+<h3 class="mb-2">
+  Complexitate proiect:
+  {#if data.order.complexity === "necunoscut"}
+    {data.order.complexity}
+  {:else}
+    {data.order.complexity}/5
+  {/if}
+</h3>
+<h3 class="mb-2">
+  Idee proiect:
+  {#if data.order.projectIdea === "none"}
+    {data.order.projectIdea}
+  {/if}
+</h3>
+{#if data.order.projectIdea !== "none"}
+  <p class="text-lg inline">
+    {data.order.projectIdea}
+  </p>
+{/if}
 <div class="form-control">
   <label class="label cursor-pointer justify-end p-0">
     <span class="label font-medium text-xl mr-2">Terminat: </span>

@@ -1,7 +1,7 @@
 <script>
   import Order from "../../components/order.svelte";
   export let data;
-  let orders = data.props;
+  let orders = data.orders;
 </script>
 
 <h1>Dashboard</h1>
