@@ -2,6 +2,50 @@
   let hasProjectIdea = false;
   let wantsTehnologies = false;
   let knowsComplexity = false;
+
+  let name: string;
+  let phoneNumber: string;
+  let ideaDetails: string;
+  let complexity = 1;
+  let wantedTechnologies: string;
+
+  function addOrderToDB() {
+    //check for required fields
+    if (!name) alert("Introduceți numele");
+    else if (!phoneNumber) alert("Introduceți numărul de telefon");
+
+    // give values to optional fields for db
+    let parsedComplexity = complexity.toString();
+    if (knowsComplexity) parsedComplexity = "necunoscut";
+    if (!hasProjectIdea) ideaDetails = "none";
+    if (!wantsTehnologies) wantedTechnologies = "nespecificat";
+
+    const order = {
+      name: name,
+      phoneNumber: phoneNumber,
+      projectIdea: ideaDetails,
+      complexity: parsedComplexity,
+      technologies: wantedTechnologies,
+    };
+
+    fetch("https://comanda-atestate-api.vercel.app/addOrder", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(order),
+    })
+      //!!CHANGE THESE ALERTS TO SOMETHING ELSE
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        alert("Comanda a fost trimisă cu succes!");
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Eroare la trimiterea comenzii");
+      });
+  }
 </script>
 
 <h1>Comandă</h1>
@@ -12,19 +56,23 @@
     <label for="name" class="form-control w-fit max-w-xs mb-1">
       <span class="label font-medium">Cum te cheamă?</span>
       <input
+        bind:value={name}
         type="text"
         placeholder="Popescu Ion"
         name="name"
         class="input input-bordered input-info w-fit max-w-xs"
+        required
       />
     </label>
     <label for="phone" class="form-control w-fit max-w-xs my-1">
       <span class="label font-medium">Număr de telefon:</span>
       <input
+        bind:value={phoneNumber}
         type="tel"
         placeholder="072 123 4567"
         name="phone"
         class="input input-bordered input-info w-fit max-w-xs"
+        required
       />
     </label>
     <label
@@ -45,6 +93,7 @@
           >Detaliază ideea de proiect:</span
         >
         <textarea
+          bind:value={ideaDetails}
           id="ideaDetails"
           class="textarea textarea-info w-80 h-40 mb-1"
           placeholder="Idee..."
@@ -66,11 +115,11 @@
         </div>
         {#if !knowsComplexity}
           <input
+            bind:value={complexity}
             type="range"
             name="projectComplexity"
             min="1"
             max="5"
-            value="1"
             step="1"
             class="range range-info"
           />
@@ -101,6 +150,7 @@
           >Vreau sa folosești următoarele tehnologii:</span
         >
         <textarea
+          bind:value={wantedTechnologies}
           id="wantedTechnologies"
           placeholder="React, MongoDB, etc."
           class="textarea textarea-info w-80 h-40 mb-4"
@@ -108,6 +158,7 @@
       </div>
     {/if}
     <button
+      on:click={addOrderToDB}
       class="btn btn-outline btn-secondary min-h-5 h-10 px-5 text-base"
       id="sendResponseBttn">Submit</button
     >
