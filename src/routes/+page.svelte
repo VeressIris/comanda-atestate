@@ -31,7 +31,7 @@
       technologies: wantedTechnologies,
     };
 
-    fetch("https://comanda-atestate-api.vercel.app/addOrder", {
+    fetch("/api/addOrder", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
