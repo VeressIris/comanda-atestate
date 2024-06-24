@@ -25,6 +25,8 @@
       return;
     }
 
+    // trim trailing spaces from username so that it doesn't interfere with the login request
+    username = username.trim();
     //send login request to server
     const response = await fetch("/api/login", {
       method: "POST",
