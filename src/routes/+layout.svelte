@@ -1,5 +1,72 @@
-<script>
+<script lang="ts">
   import "../app.css";
+  import { admin } from "../stores.ts";
+  import { onDestroy } from "svelte";
+
+  let adminStore: boolean;
+  const unsubscribe = admin.subscribe((value) => (adminStore = value));
+
+  let username: string;
+  let password: string;
+  let usernameLabel: HTMLElement | null;
+  let passwordLabel: HTMLElement | null;
+
+  async function login() {
+    //check if fields are complete
+    if (!username || !password) {
+      if (!username) {
+        usernameLabel = document.getElementById("username-label");
+        usernameLabel?.classList.add("input-error");
+      }
+      if (!password) {
+        passwordLabel = document.getElementById("password-label");
+        passwordLabel?.classList.add("input-error");
+      }
+      return;
+    }
+
+    //send login request to server
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
+    const result = await response.json();
+    if (result.admin) {
+      console.log("Logged in as admin");
+
+      // set store admin to true
+      admin.set(true);
+      username = "";
+      password = "";
+      loginModal.close();
+    } else {
+      //TODO add more error handling
+      console.log("Login failed");
+    }
+  }
+
+  function resetInputColors() {
+    if (username) {
+      if (usernameLabel == null)
+        usernameLabel = document.getElementById("username-label");
+      usernameLabel?.classList.remove("input-error");
+    }
+    if (password) {
+      if (passwordLabel == null)
+        passwordLabel = document.getElementById("password-label");
+      passwordLabel?.classList.remove("input-error");
+    }
+  }
+
+  function logout() {
+    console.log("Logging out");
+    admin.set(false);
+  }
+
+  onDestroy(unsubscribe);
 </script>
 
 <div class="navbar bg-success-content mb-10">
@@ -23,9 +90,15 @@
       <ul
         class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-success-content rounded-box w-52"
       >
-        <li><a href="/dashboard">Dashboard</a></li>
+        {#if adminStore == true}
+          <li><a href="/dashboard">Dashboard</a></li>
+        {/if}
         <li>
-          <button on:click={() => loginModal.showModal()}>Login/logout</button>
+          {#if adminStore == false}
+            <button on:click={() => loginModal.showModal()}>Login</button>
+          {:else}
+            <button on:click={logout}>Logout</button>
+          {/if}
         </li>
       </ul>
     </div>
@@ -66,7 +139,10 @@
     </form>
     <h3 class="text-lg font-bold">Login:</h3>
     <div class="flex flex-col items-center">
-      <label class="input input-bordered flex items-center gap-2 my-2">
+      <label
+        id="username-label"
+        class="input input-bordered flex items-center gap-2 my-2"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 16 16"
@@ -77,9 +153,19 @@
             d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z"
           />
         </svg>
-        <input type="text" class="grow" placeholder="Username" />
+        <input
+          on:change={resetInputColors}
+          bind:value={username}
+          type="text"
+          class="grow"
+          id="username"
+          placeholder="Username"
+        />
       </label>
-      <label class="input input-bordered flex items-center gap-2 my-2">
+      <label
+        id="password-label"
+        class="input input-bordered flex items-center gap-2 my-2"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 16 16"
@@ -92,9 +178,17 @@
             clip-rule="evenodd"
           />
         </svg>
-        <input type="password" class="grow" placeholder="xxxx" />
+        <input
+          on:change={resetInputColors}
+          bind:value={password}
+          id="password"
+          type="password"
+          class="grow"
+          placeholder="xxxx"
+        />
       </label>
       <button
+        on:click={login}
         class="btn btn-outline btn-primary mt-2 min-h-5 h-10 px-5 text-base"
         >Login</button
       >
