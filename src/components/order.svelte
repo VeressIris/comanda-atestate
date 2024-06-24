@@ -3,6 +3,19 @@
   export let technologies: string;
   export let complexity: string;
   export let completed: boolean;
+
+  export async function setOrderStatus() {
+    await fetch(`/api/updateOrderStatus?name=${encodeURIComponent(name)}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return {
+      message: `Status for ${name}'s order has been updated`,
+    };
+  }
 </script>
 
 <div
@@ -26,6 +39,7 @@
         <span class="label text-lg mr-2">Terminat: </span>
         <input
           bind:checked={completed}
+          on:change={setOrderStatus}
           type="checkbox"
           class="checkbox checkbox-primary"
         />

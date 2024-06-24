@@ -1,9 +1,24 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-
   export let data: PageData;
 
   let completed = data.order.completed;
+
+  export async function setOrderStatus() {
+    await fetch(
+      `/api/updateOrderStatus?name=${encodeURIComponent(data.order.name)}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return {
+      message: `Status for ${data.order.name}'s order has been updated`,
+    };
+  }
 </script>
 
 <h1 class="mb-4">Proiect pentru <i>{data.order.name}</i></h1>
@@ -35,6 +50,7 @@
       bind:checked={completed}
       type="checkbox"
       class="checkbox checkbox-primary"
+      on:change={setOrderStatus}
     />
   </label>
 </div>

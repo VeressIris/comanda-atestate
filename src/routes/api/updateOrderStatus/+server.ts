@@ -5,7 +5,7 @@ export const PATCH = async ({ url }) => {
     const name = url.searchParams.get("name");
     const ordersCollection = client.db("orders").collection("orders");
     const order = await ordersCollection.findOne({ name: name });
-    const currentStatus = order.completed;
+    const currentStatus = order!.completed;
     const updateDocument = {
       $set: {
         completed: !currentStatus,
